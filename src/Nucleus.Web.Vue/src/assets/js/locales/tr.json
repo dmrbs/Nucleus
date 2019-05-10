@@ -27,12 +27,29 @@
   "EmailAddress": "E-posta adresi",
   "EmailAlreadyExist": "Bu e-mail adresi zaten mevcut!",
   "EmailValidationError": "Geçerli bir e-posta adresi girin!",
+  "GroupName":"Grup Adı",
+  "Groups":"Gruplar",
+
+  "Positions":"Pozisyonlar",
+  "PositionName":"Pozisyon İsmi",
+  "NewPosition":"Yeni Pozisyon",
+
+  "Tags":"Etiketler",
+  "TagDescription":"Etiket Tanımı",
+  "NewTag":"Yeni Etiket",
+  "TagSerialNumber":"Etiket Seri Numarası",
+
+  "MeasurementDescription":"Ölçüm Tanımı",
+"MeasurementDegree":"Ölçüm Derecesi",
+"Measurements":"Ölçümler",
+
   "HelloWorld": "Merhaba dünya!",
   "Home": "Anasayfa",
   "Login": "Giriş",
   "NewPassword": "Yeni şifre",
   "NewRole": "Yeni rol",
   "NewUser": "Yeni kullanıcı",
+  "NewGroup":"Yeni Grup",
   "No": "Hayır",
   "NothingToDisplay": "Üzgünüz, gösterilecek birşey bulunamadı :(",
   "Password": "Şifre",
@@ -51,6 +68,7 @@
   "SelectAll": "Tümünü seç",
   "SelectPermissions": "Yetki seçin",
   "SelectRoles": "Rol seçin",
+  "SelectGroups": "Grup seçin",
   "Successful": "Başarılı!",
   "UserName": "Kullanıcı adı",
   "UserNameAlreadyExist": "Bu kullanıcı adı zaten mevcut!",
@@ -58,5 +76,10 @@
   "UserNameOrPasswordIncorrect": "Kullanıcı adı veya şifre yanlış!",
   "UserNotFound": "Kullanıcı bulunamadı!",
   "Users": "Kullanıcılar",
-  "Yes": "Evet"
+  "Yes": "Evet",
+  "StartTime":"Başlama Zamanı",
+  "FinishTime":"Bitiş Zamanı",
+  "FlyNumber":"Uçuş Numarası",
+  "Container":"Konteyner"
+
 }

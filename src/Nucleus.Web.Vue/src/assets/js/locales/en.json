@@ -58,5 +58,21 @@
   "UserNameOrPasswordIncorrect": "The user name or password is incorrect!",
   "UserNotFound": "User not found!",
   "Users": "Users",
-  "Yes": "Yes"
+  "Yes": "Yes",
+  "GroupName": "Group Name",
+  "Groups": "Groups",
+  "Positions": "Positions",
+  "PositionName": "Position Name",
+  "NewPosition": "New Position",
+  "Tags":"Tags",
+  "TagDescription":"Tag Description",
+  "NewTag":"New Tag",
+  "TagSerialNumber":"Tag Serial Number",
+  "MeasurementDescription":"Measurement Description",
+  "MeasurementDegree":"Measurement Degree",
+  "Measurements":"Measurements",
+  "StartTime":"Start Time",
+  "FinishTime":"Finish Time",
+  "FlyNumber":"Fly Number",
+  "Container":"Container"
 }

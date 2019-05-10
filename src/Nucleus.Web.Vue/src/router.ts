@@ -25,7 +25,12 @@ const router = new VueRouter({
             children: [
                 { path: 'home', component: require('@/admin/views/home/home.vue').default },
                 { path: 'user-list', component: require('@/admin/views/users/user-list.vue').default },
-                { path: 'role-list', component: require('@/admin/views/roles/role-list.vue').default }
+                { path: 'role-list', component: require('@/admin/views/roles/role-list.vue').default },
+                { path: 'group-list', component: require('@/admin/views/groups/group-list.vue').default },
+                { path: 'position-list', component: require('@/admin/views/positions/position-list.vue').default },
+                { path: 'tag-list', component: require('@/admin/views/tags/tag-list.vue').default },
+                { path: 'measurement-list', component: require('@/admin/views/measurements/measurement-list.vue').default }
+
             ]
         }
     ]
