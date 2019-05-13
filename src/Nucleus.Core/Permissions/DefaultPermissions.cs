@@ -18,7 +18,14 @@ namespace Nucleus.Core.Permissions
                 RoleRead,
                 RoleCreate,
                 RoleUpdate,
-                RoleDelete
+                RoleDelete,
+                GroupRead,
+                PositionRead,
+                TagRead,
+                MeasurementRead,
+
+
+
             };
         }
 
@@ -92,6 +99,31 @@ namespace Nucleus.Core.Permissions
             Id = new Guid("8F76DE0B-114A-4DF8-A93D-CEC927D06A3C")
         };
 
+        public static readonly Permission GroupRead = new Permission
+        {
+            DisplayName = "Group read",
+            Name = PermissionNameForGroupRead,
+            Id = new Guid("57A142F7-EF41-4990-B6DB-654188393DC0")
+        };
+        public static readonly Permission PositionRead = new Permission
+        {
+            DisplayName = "Position read",
+            Name = PermissionNameForPositionRead,
+            Id = new Guid("C8BFD71A-BD67-42E5-A680-AF5F23CC887D")
+        };
+        public static readonly Permission TagRead = new Permission
+        {
+            DisplayName = "Tag read",
+            Name = PermissionNameForPositionRead,
+            Id = new Guid("313522E6-16DB-400A-BC3F-CD12EFF93118")
+        };
+        public static readonly Permission MeasurementRead = new Permission
+        {
+            DisplayName = "Measurement read",
+            Name = PermissionNameForMeasurementRead,
+            Id = new Guid("5B1FF6A0-BE50-4D2E-B40F-CC16D89903D9")
+        };
+
         // these strings are using on authorize attributes
         public const string PermissionNameForAdministration = "Permissions_Administration";
         public const string PermissionNameForMemberAccess = "Permissions_Member_Access";
@@ -103,5 +135,12 @@ namespace Nucleus.Core.Permissions
         public const string PermissionNameForRoleCreate = "Permissions_Role_Create";
         public const string PermissionNameForRoleUpdate = "Permissions_Role_Update";
         public const string PermissionNameForRoleDelete = "Permissions_Role_Delete";
+        public const string PermissionNameForGroupRead = "Permissions_Group_Read";
+        public const string PermissionNameForPositionRead = "Permissions_Position_Read";
+        public const string PermissionNameForTagRead = "Permissions_Tag_Read";
+        public const string PermissionNameForMeasurementRead = "Permissions_Measurement_Read";
+
+
+
     }
 }

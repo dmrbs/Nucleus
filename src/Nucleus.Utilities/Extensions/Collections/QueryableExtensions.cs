@@ -10,6 +10,7 @@ namespace Nucleus.Utilities.Extensions.Collections
         public static IQueryable<TEntity> Where<TEntity>(
             this IQueryable<TEntity> source,
             bool condition = false,
+            
             Expression<Func<TEntity, bool>> predicate = null)
         {
             if (condition && predicate != null)

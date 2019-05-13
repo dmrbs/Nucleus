@@ -33,10 +33,7 @@ namespace Nucleus.Application.Users
 
         public async Task<IPagedList<UserListOutput>> GetUsersAsync(UserListInput input)
         {
-            var query = _userManager.Users.Where(
-                    !input.Filter.IsNullOrEmpty(),
-                    predicate => predicate.UserName.Contains(input.Filter) ||
-                                 predicate.Email.Contains(input.Filter))
+            var query = _userManager.Users
                 .OrderBy(input.SortBy);
 
             var usersCount = await query.CountAsync();

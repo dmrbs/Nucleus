@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Nucleus.Core.Groups;
 using Nucleus.Core.Permissions;
+using Nucleus.Core.Positions;
 using Nucleus.Core.Roles;
+using Nucleus.Core.Tags;
 using Nucleus.Core.Users;
 
 namespace Nucleus.EntityFramework
@@ -17,6 +20,11 @@ namespace Nucleus.EntityFramework
         }
 
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Position> Positions { get; set; }
+
+
 
         public DbSet<RolePermission> RolePermissions { get; set; }
 

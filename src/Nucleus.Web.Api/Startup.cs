@@ -7,6 +7,8 @@ using Nucleus.Application;
 using Nucleus.Web.Core.ActionFilters;
 using Nucleus.Web.Core.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nucleus.Web.Api
 {
@@ -36,6 +38,17 @@ namespace Nucleus.Web.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Nucleus API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer",
+                 new ApiKeyScheme
+                 {
+                     In = "header",
+                     Description = "Please enter into field the word 'Bearer' following by space and JWT",
+                     Name = "Authorization",
+                     Type = "apiKey"
+                 });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                { "Bearer", Enumerable.Empty<string>() },
+            });
             });
         }
 
