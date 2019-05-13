@@ -1,0 +1,3 @@
+﻿interface IPositionListOutput {
+    name: string;
+}
