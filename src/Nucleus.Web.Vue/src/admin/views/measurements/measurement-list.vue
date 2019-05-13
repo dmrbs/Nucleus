@@ -17,9 +17,9 @@
         </v-toolbar>
 
         <v-data-table :headers="headers"
-                      :items="pagedListOfUserListDto.items"
+                      :items="pagedListOfMeasurementListDto.items"
                       :pagination.sync="pagination"
-                      :total-items="pagedListOfUserListDto.totalCount"
+                      :total-items="pagedListOfMeasurementListDto.totalCount"
                       :loading="loading"
                       class="elevation-1">
             <template slot="items" slot-scope="props">
@@ -31,13 +31,13 @@
                 <td>deneme</td>
 
                 <td class="justify-center layout px-0">
-                    <v-icon v-if="nucleus.auth.isGranted('Permissions_User_Update')" small
+                    <v-icon v-if="nucleus.auth.isGranted('Permissions_Measurement_Update')" small
                             class="mr-2"
-                            @click="editUser(props.item.id)">
+                            @click="editMeasurement(props.item.id)">
                         edit
                     </v-icon>
-                    <v-icon v-if="nucleus.auth.isGranted('Permissions_User_Delete')" small
-                            @click="deleteUser(props.item.id)">
+                    <v-icon v-if="nucleus.auth.isGranted('Permissions_Measurement_Delete')" small
+                            @click="deleteMeasurement(props.item.id)">
                         delete
                     </v-icon>
                 </td>
