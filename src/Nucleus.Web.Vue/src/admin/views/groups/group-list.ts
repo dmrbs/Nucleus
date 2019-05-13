@@ -1,126 +1,138 @@
-import NucleusComponentBase from '@/shared/application/nucleus-component-base';
-import { Component, Watch } from 'vue-property-decorator';
+import NucleusComponentBase from "@/shared/application/nucleus-component-base";
+import { Component, Watch } from "vue-property-decorator";
 
 @Component
-export default class UserListComponent extends NucleusComponentBase {
-    public refs = this.$refs as any;
-    public loading = true;
-    public pagination = {};
-    public search = '';
-    public dialog = false;
-    public formTitle = '';
-    public errors: INameValueDto[] = [];
-    public allRoles: IRoleDto[] = [];
-    public isEdit = false;
-    public selectAll = false;
+export default class GroupListComponent extends NucleusComponentBase {
+  public refs = this.$refs as any;
+  public loading = true;
+  public pagination = {};
+  public search = "";
+  public dialog = false;
+  public formTitle = "";
+  public errors: INameValueDto[] = [];
+  public allRoles: IRoleDto[] = [];
+  public isEdit = false;
+  public selectAll = false;
 
-    get headers() {
-        return [
-            { text: this.$t('GroupName'), value: 'userName' },
-            { text: this.$t('Actions'), value: '', sortable: false }
-        ];
-    }
+  get headers() {
+    return [
+      { text: this.$t("GroupName"), value: "userName" },
+      { text: this.$t("Actions"), value: "", sortable: false }
+    ];
+  }
 
-    public createOrUpdateUserInput = {
-        grantedRoleIds: [],
-        user: {} as IUserDto
-    } as ICreateOrUpdateUserInput;
+  public createOrUpdateGroupInput = {
+    grantedRoleIds: [],
+    group: {} as IGroupDto
+  } as ICreateOrUpdateGroupInput;
 
-    public pagedListOfUserListDto: IPagedList<IPagedListInput> = {
-        totalCount: 0,
-        items: []
-    };
+  public pagedListOfGroupListDto: IPagedList<IPagedListInput> = {
+    totalCount: 0,
+    items: []
+  };
 
-    @Watch('pagination')
-    public onPaginationChanged() {
-        this.getUsers();
-    }
+  @Watch("pagination")
+  public onPaginationChanged() {
+    this.getGroups();
+  }
 
-    @Watch('search')
-    public onSearchChanged() {
-        this.getUsers();
-    }
+  @Watch("search")
+  public onSearchChanged() {
+    this.getGroups();
+  }
 
-    public mounted() {
-        this.getUsers();
-    }
+  public mounted() {
+    this.getGroups();
+  }
 
-    public editUser(id: string) {
-        this.dialog = true;
-        this.formTitle = id ? this.$t('EditGroup').toString() : this.$t('NewGroup').toString();
-        this.isEdit = id ? true : false;
-        this.errors = [];
-        this.nucleusService.get<IGetUserForCreateOrUpdateOutput>('/api/user/GetUserForCreateOrUpdate?id=' + id)
-            .then((response) => {
-                const result = response.content as IGetUserForCreateOrUpdateOutput;
-                this.allRoles = result.allRoles;
-                this.createOrUpdateUserInput = {
-                    grantedRoleIds: result.grantedRoleIds,
-                    user: result.user
-                };
-            });
-    }
-
-    public deleteUser(id: string) {
-        this.swalConfirm(this.$t('AreYouSureToDelete').toString())
-            .then((result) => {
-                if (result.value) {
-                    const query = '?id=' + id;
-
-                    this.nucleusService.delete('/api/user/deleteUser' + query)
-                        .then((response) => {
-                            if (!response.isError) {
-                                this.swalToast(2000, 'success', this.$t('Successful').toString());
-                                this.getUsers();
-                            } else {
-                                this.swalAlert('error', response.errors.join('<br>'));
-                            }
-                        });
-                }
-            });
-    }
-
-    public save() {
-        if (this.refs.form.validate()) {
-            this.errors = [];
-            this.nucleusService.post<void>('/api/user/createOrUpdateUser',
-                this.createOrUpdateUserInput as ICreateOrUpdateUserInput)
-                .then((response) => {
-                    if (!response.isError) {
-                        this.swalToast(2000, 'success', this.$t('Successful').toString());
-                        this.dialog = false;
-                        this.getUsers();
-                    } else {
-                        this.errors = response.errors;
-                    }
-                });
-        }
-    }
-
-    public getUsers() {
-        this.loading = true;
-        const { sortBy, descending, page, rowsPerPage }: any = this.pagination;
-        const userListInput: IPagedListInput = {
-            filter: this.search,
-            pageIndex: page - 1,
-            pageSize: rowsPerPage
+  public editGroup(id: string) {
+    this.dialog = true;
+    this.formTitle = id
+      ? this.$t("EditGroup").toString()
+      : this.$t("NewGroup").toString();
+    this.isEdit = id ? true : false;
+    this.errors = [];
+    this.nucleusService
+      .get<IGetGroupForCreateOrUpdateOutput>(
+        "/api/group/GetGroupForCreateOrUpdate?id=" + id
+      )
+      .then(response => {
+        const result = response.content as IGetGroupForCreateOrUpdateOutput;
+        this.allRoles = result.allRoles;
+        this.createOrUpdateGroupInput = {
+          grantedRoleIds: result.grantedRoleIds,
+          group: result.group
         };
+      });
+  }
 
-        if (sortBy) {
-            userListInput.sortBy = sortBy + (descending ? ' desc' : '');
-        }
+  public deleteGroup(id: string) {
+    this.swalConfirm(this.$t("AreYouSureToDelete").toString()).then(result => {
+      if (result.value) {
+        const query = "?id=" + id;
 
-        const query = '?' + this.queryString.stringify(userListInput);
-        this.nucleusService.get<IPagedList<IPagedListInput>>('/api/user/getUsers' + query, false).then((response) => {
-            this.pagedListOfUserListDto = response.content as IPagedList<IPagedListInput>;
-            this.loading = false;
+        this.nucleusService
+          .delete("/api/group/deleteGroup" + query)
+          .then(response => {
+            if (!response.isError) {
+              this.swalToast(2000, "success", this.$t("Successful").toString());
+              this.getGroups();
+            } else {
+              this.swalAlert("error", response.errors.join("<br>"));
+            }
+          });
+      }
+    });
+  }
+
+  public save() {
+    if (this.refs.form.validate()) {
+      this.errors = [];
+      this.nucleusService
+        .post<void>("/api/group/createOrUpdateGroup", this
+          .createOrUpdateGroupInput as ICreateOrUpdateGroupInput)
+        .then(response => {
+          if (!response.isError) {
+            this.swalToast(2000, "success", this.$t("Successful").toString());
+            this.dialog = false;
+            this.getGroups();
+          } else {
+            this.errors = response.errors;
+          }
         });
     }
+  }
 
-    public selectAllRoles() {
-        this.createOrUpdateUserInput.grantedRoleIds = [];
-        if (this.selectAll) {
-            this.createOrUpdateUserInput.grantedRoleIds = ((this.allRoles.map((roles) => roles.id)) as string[]);
-        }
+  public getGroups() {
+    this.loading = true;
+    const { sortBy, descending, page, rowsPerPage }: any = this.pagination;
+    const groupListInput: IPagedListInput = {
+      filter: this.search,
+      pageIndex: page - 1,
+      pageSize: rowsPerPage
+    };
+
+    if (sortBy) {
+      groupListInput.sortBy = sortBy + (descending ? " desc" : "");
     }
+
+    const query = "?" + this.queryString.stringify(groupListInput);
+    this.nucleusService
+      .get<IPagedList<IPagedListInput>>("/api/group/getGroups" + query, false)
+      .then(response => {
+        this.pagedListOfGroupListDto = response.content as IPagedList<
+          IPagedListInput
+        >;
+        this.loading = false;
+      });
+  }
+
+  public selectAllRoles() {
+    this.createOrUpdateGroupInput.grantedRoleIds = [];
+    if (this.selectAll) {
+      this.createOrUpdateGroupInput.grantedRoleIds = this.allRoles.map(
+        roles => roles.id
+      ) as string[];
+    }
+  }
 }

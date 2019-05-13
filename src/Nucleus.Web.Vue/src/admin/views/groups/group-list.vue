@@ -14,7 +14,7 @@
                           hide-details>
             </v-text-field>
             <v-spacer></v-spacer>
-            <v-btn v-if="nucleus.auth.isGranted('Permissions_User_Create')" @click="editUser()" color="primary" dark class="mb-2">{{$t('NewGroup')}}</v-btn>
+            <v-btn v-if="nucleus.auth.isGranted('Permissions_Group_Create')" @click="editGroup()" color="primary" dark class="mb-2">{{$t('NewGroup')}}</v-btn>
             <v-dialog v-model="dialog" max-width="500px">
                 <v-card>
                     <v-card-title>
@@ -29,7 +29,7 @@
                         </div>
                         <v-form ref="form" @keyup.native.enter="save">
                             <v-text-field name="groupName" :label="$t('GroupName')" type="text"
-                                          v-model="createOrUpdateUserInput.user.groupName"
+                                          v-model="createOrUpdateGroupInput.group.Name"
                                           :rules="[requiredError]"></v-text-field>
                           
                         </v-form>
@@ -45,21 +45,21 @@
         </v-toolbar>
 
         <v-data-table :headers="headers"
-                      :items="pagedListOfUserListDto.items"
+                      :items="pagedListOfGroupListDto.items"
                       :pagination.sync="pagination"
-                      :total-items="pagedListOfUserListDto.totalCount"
+                      :total-items="pagedListOfGroupListDto.totalCount"
                       :loading="loading"
                       class="elevation-1">
             <template slot="items" slot-scope="props">
-                <td>{{ props.item.userName }}</td>
+                <td>{{ props.item.Name }}</td>
                 <td class="justify-center layout px-0">
-                    <v-icon v-if="nucleus.auth.isGranted('Permissions_User_Update')" small
+                    <v-icon v-if="nucleus.auth.isGranted('Permissions_Group_Update')" small
                             class="mr-2"
-                            @click="editUser(props.item.id)">
+                            @click="editGroup(props.item.id)">
                         edit
                     </v-icon>
-                    <v-icon v-if="nucleus.auth.isGranted('Permissions_User_Delete')" small
-                            @click="deleteUser(props.item.id)">
+                    <v-icon v-if="nucleus.auth.isGranted('Permissions_Group_Delete')" small
+                            @click="deleteGroup(props.item.id)">
                         delete
                     </v-icon>
                 </td>
