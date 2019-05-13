@@ -14,7 +14,7 @@
                           hide-details>
             </v-text-field>
             <v-spacer></v-spacer>
-            <v-btn v-if="nucleus.auth.isGranted('Permissions_User_Create')" @click="editUser()" color="primary" dark class="mb-2">{{$t('NewTag')}}</v-btn>
+            <v-btn v-if="nucleus.auth.isGranted('Permissions_Tag_Create')" @click="editTag()" color="primary" dark class="mb-2">{{$t('NewTag')}}</v-btn>
             <v-dialog v-model="dialog" max-width="500px">
                 <v-card>
                     <v-card-title>
@@ -28,11 +28,11 @@
                             </v-alert>
                         </div>
                         <v-form ref="form" @keyup.native.enter="save">
-                            <v-text-field name="tagDescription" :label="$t('TagDescription')" type="text"
-                                          v-model="createOrUpdateUserInput.user.tagDescription"
+                            <v-text-field name="description" :label="$t('TagDescription')" type="text"
+                                          v-model="createOrUpdateTagInput.tag.description"
                                           :rules="[requiredError]"></v-text-field>
-                            <v-text-field name="tagSerialNumber" :label="$t('TagSerialNumber')" type="text"
-                                          v-model="createOrUpdateUserInput.user.tagSerialNumber"
+                            <v-text-field name="serialNumber" :label="$t('TagSerialNumber')" type="text"
+                                          v-model="createOrUpdateTagInput.tag.serialNumber"
                                           :rules="[requiredError]"></v-text-field>
                         </v-form>
                     </v-card-text>
@@ -47,9 +47,9 @@
         </v-toolbar>
 
         <v-data-table :headers="headers"
-                      :items="pagedListOfUserListDto.items"
+                      :items="pagedListOfTagListDto.items"
                       :pagination.sync="pagination"
-                      :total-items="pagedListOfUserListDto.totalCount"
+                      :total-items="pagedListOfTagListDto.totalCount"
                       :loading="loading"
                       class="elevation-1">
             <template slot="items" slot-scope="props">
@@ -58,13 +58,13 @@
                 <td> Örnek Açıklama </td>
               <!--   <td>{{ props.item.email }}</td> -->
                 <td class="justify-center layout px-0">
-                    <v-icon v-if="nucleus.auth.isGranted('Permissions_User_Update')" small
+                    <v-icon v-if="nucleus.auth.isGranted('Permissions_Tag_Update')" small
                             class="mr-2"
-                            @click="editUser(props.item.id)">
+                            @click="editTag(props.item.id)">
                         edit
                     </v-icon>
-                    <v-icon v-if="nucleus.auth.isGranted('Permissions_User_Delete')" small
-                            @click="deleteUser(props.item.id)">
+                    <v-icon v-if="nucleus.auth.isGranted('Permissions_Tag_Delete')" small
+                            @click="deleteTag(props.item.id)">
                         delete
                     </v-icon>
                 </td>

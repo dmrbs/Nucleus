@@ -2,7 +2,7 @@ import NucleusComponentBase from '@/shared/application/nucleus-component-base';
 import { Component, Watch } from 'vue-property-decorator';
 
 @Component
-export default class UserListComponent extends NucleusComponentBase {
+export default class TagListComponent extends NucleusComponentBase {
     public refs = this.$refs as any;
     public loading = true;
     public pagination = {};
@@ -13,6 +13,8 @@ export default class UserListComponent extends NucleusComponentBase {
     public allRoles: IRoleDto[] = [];
     public isEdit = false;
     public selectAll = false;
+    //allTags: IPermissionDto[];
+    //allTags: any;
 
     get headers() {
         return [
@@ -22,57 +24,57 @@ export default class UserListComponent extends NucleusComponentBase {
         ];
     }
 
-    public createOrUpdateUserInput = {
+    public createOrUpdateTagInput = {
         grantedRoleIds: [],
-        user: {} as IUserDto
-    } as ICreateOrUpdateUserInput;
+        tag: {} as ITagDto
+    } as ICreateOrUpdateTagInput;
 
-    public pagedListOfUserListDto: IPagedList<IPagedListInput> = {
+    public pagedListOfTagListDto: IPagedList<IPagedListInput> = {
         totalCount: 0,
         items: []
     };
 
     @Watch('pagination')
     public onPaginationChanged() {
-        this.getUsers();
+        this.getTags();
     }
 
     @Watch('search')
     public onSearchChanged() {
-        this.getUsers();
+        this.getTags();
     }
 
     public mounted() {
-        this.getUsers();
+        this.getTags();
     }
 
-    public editUser(id: string) {
+    public editTag(id: string) {
         this.dialog = true;
-        this.formTitle = id ? this.$t('EditUser').toString() : this.$t('NewTag').toString();
+        this.formTitle = id ? this.$t('EditTag').toString() : this.$t('NewTag').toString();
         this.isEdit = id ? true : false;
         this.errors = [];
-        this.nucleusService.get<IGetUserForCreateOrUpdateOutput>('/api/user/GetUserForCreateOrUpdate?id=' + id)
+        this.nucleusService.get<IGetTagForCreateOrUpdateOutput>('/api/tag/GetTagForCreateOrUpdate?id=' + id)
             .then((response) => {
-                const result = response.content as IGetUserForCreateOrUpdateOutput;
+                const result = response.content as IGetTagForCreateOrUpdateOutput;
                 this.allRoles = result.allRoles;
-                this.createOrUpdateUserInput = {
+                this.createOrUpdateTagInput = {
                     grantedRoleIds: result.grantedRoleIds,
-                    user: result.user
+                    tag: result.tag
                 };
             });
     }
 
-    public deleteUser(id: string) {
+    public deleteTag(id: string) {
         this.swalConfirm(this.$t('AreYouSureToDelete').toString())
             .then((result) => {
                 if (result.value) {
                     const query = '?id=' + id;
 
-                    this.nucleusService.delete('/api/user/deleteUser' + query)
+                    this.nucleusService.delete('/api/tag/deleteTag' + query)
                         .then((response) => {
                             if (!response.isError) {
                                 this.swalToast(2000, 'success', this.$t('Successful').toString());
-                                this.getUsers();
+                                this.getTags();
                             } else {
                                 this.swalAlert('error', response.errors.join('<br>'));
                             }
@@ -84,13 +86,13 @@ export default class UserListComponent extends NucleusComponentBase {
     public save() {
         if (this.refs.form.validate()) {
             this.errors = [];
-            this.nucleusService.post<void>('/api/user/createOrUpdateUser',
-                this.createOrUpdateUserInput as ICreateOrUpdateUserInput)
+            this.nucleusService.post<void>('/api/tag/createOrUpdateTag',
+                this.createOrUpdateTagInput as ICreateOrUpdateTagInput)
                 .then((response) => {
                     if (!response.isError) {
                         this.swalToast(2000, 'success', this.$t('Successful').toString());
                         this.dialog = false;
-                        this.getUsers();
+                        this.getTags();
                     } else {
                         this.errors = response.errors;
                     }
@@ -98,30 +100,30 @@ export default class UserListComponent extends NucleusComponentBase {
         }
     }
 
-    public getUsers() {
+    public getTags() {
         this.loading = true;
         const { sortBy, descending, page, rowsPerPage }: any = this.pagination;
-        const userListInput: IPagedListInput = {
+        const tagListInput: IPagedListInput = {
             filter: this.search,
             pageIndex: page - 1,
             pageSize: rowsPerPage
         };
 
         if (sortBy) {
-            userListInput.sortBy = sortBy + (descending ? ' desc' : '');
+            tagListInput.sortBy = sortBy + (descending ? ' desc' : '');
         }
 
-        const query = '?' + this.queryString.stringify(userListInput);
-        this.nucleusService.get<IPagedList<IPagedListInput>>('/api/user/getUsers' + query, false).then((response) => {
-            this.pagedListOfUserListDto = response.content as IPagedList<IPagedListInput>;
+        const query = '?' + this.queryString.stringify(tagListInput);
+        this.nucleusService.get<IPagedList<IPagedListInput>>('/api/tag/getTags' + query, false).then((response) => {
+            this.pagedListOfTagListDto = response.content as IPagedList<IPagedListInput>;
             this.loading = false;
         });
     }
 
     public selectAllRoles() {
-        this.createOrUpdateUserInput.grantedRoleIds = [];
+        this.createOrUpdateTagInput.grantedRoleIds = [];
         if (this.selectAll) {
-            this.createOrUpdateUserInput.grantedRoleIds = ((this.allRoles.map((roles) => roles.id)) as string[]);
+            this.createOrUpdateTagInput.grantedRoleIds = ((this.allRoles.map((roles) => roles.id)) as string[]);
         }
     }
 }
